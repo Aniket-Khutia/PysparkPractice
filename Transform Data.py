@@ -31,37 +31,38 @@ print('------------------------Trans2-----------------------------------')
 dfclean=df.filter((col('total_time')>0) & (col('cook')>0) & (col('prep')>0))
 dfclean.show(dfclean.count(),truncate=False)
 
-# TRANSFORMATION 3: SELECTING THE ITEMS WHICH ARE LESSER THAN THE AVG TOTAL TIME
-print('------------------------Trans3-----------------------------------')
-
-
-condition=dfclean.agg(round(avg(col('total_time')),2)).collect()[0][0]
-print(condition)
-dfclean.select('*').filter(expr('total_time')<condition).show(dfclean.count())
-
-
-# TRANSFORMATION 4: MAKING A SEPARATE DF FOR THE BAD RECORDS
-
-badDF=df.select('*').filter((col('cook')<0) & (col('prep')<0))
-badDF.show(badDF.count())
-
-
-# TRANSFORMATION 5: MAKING UNION OF 2 DATAFRAMES
-
-dfclean.union(badDF).show()
-
-# TRANSFORMATION 6: MAKING A DATAFRAME WITH COLUMN 'FEASIBLE' DEPENDING UPON THE TOTAL_TIME COLUMN
-
-print('------------------------Trans6-----------------------------------')
-
-newDF=dfclean.withColumn('feasible',when(col('total_time')<=35,'high').
-                         when((col('total_time')>35) & (col('total_time')<=60),'med').
-                         otherwise('low'))
-newDF.orderBy(col('total_time')).show(newDF.count())
-
-
+# # TRANSFORMATION 3: SELECTING THE ITEMS WHICH ARE LESSER THAN THE AVG TOTAL TIME
+# print('------------------------Trans3-----------------------------------')
+#
+#
+# condition=dfclean.agg(round(avg(col('total_time')),2)).collect()[0][0]
+# print(condition)
+# dfclean.select('*').filter(expr('total_time')<condition).show(dfclean.count())
+#
+#
+# # TRANSFORMATION 4: MAKING A SEPARATE DF FOR THE BAD RECORDS
+#
+# badDF=df.select('*').filter((col('cook')<0) & (col('prep')<0))
+# badDF.show(badDF.count())
+#
+#
+# # TRANSFORMATION 5: MAKING UNION OF 2 DATAFRAMES
+#
+# dfclean.union(badDF).show()
+#
+# # TRANSFORMATION 6: MAKING A DATAFRAME WITH COLUMN 'FEASIBLE' DEPENDING UPON THE TOTAL_TIME COLUMN
+#
+# print('------------------------Trans6-----------------------------------')
+#
+# newDF=dfclean.withColumn('feasible',when(col('total_time')<=35,'high').
+#                          when((col('total_time')>35) & (col('total_time')<=60),'med').
+#                          otherwise('low'))
+# newDF.orderBy(col('total_time')).show(newDF.count())
+#
+#
 # # TRANSFORMATION 7: MAKING A COUNT OF FOOD ITEMS GROUPING BY THEIR REGION
 #
 # print('--------------------------------Trans7------------------------------')
 #
 # dfclean.groupBy('region','state').agg(count(col('name'))).sort(col('region')).show()
+
