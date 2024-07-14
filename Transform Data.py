@@ -33,7 +33,7 @@ dfclean.show(dfclean.count(),truncate=False)
 
 # # TRANSFORMATION 3: SELECTING THE ITEMS WHICH ARE LESSER THAN THE AVG TOTAL TIME
 # print('------------------------Trans3-----------------------------------')
-
+#
 #
 # condition=dfclean.agg(round(avg(col('total_time')),2)).collect()[0][0]
 # print(condition)
@@ -49,9 +49,9 @@ dfclean.show(dfclean.count(),truncate=False)
 # # TRANSFORMATION 5: MAKING UNION OF 2 DATAFRAMES
 #
 # dfclean.union(badDF).show()
-
-# TRANSFORMATION 6: MAKING A DATAFRAME WITH COLUMN 'FEASIBLE' DEPENDING UPON THE TOTAL_TIME COLUMN
-
+#
+# # TRANSFORMATION 6: MAKING A DATAFRAME WITH COLUMN 'FEASIBLE' DEPENDING UPON THE TOTAL_TIME COLUMN
+#
 # print('------------------------Trans6-----------------------------------')
 #
 # newDF=dfclean.withColumn('feasible',when(col('total_time')<=35,'high').
@@ -65,3 +65,4 @@ dfclean.show(dfclean.count(),truncate=False)
 # print('--------------------------------Trans7------------------------------')
 #
 # dfclean.groupBy('region','state').agg(count(col('name'))).sort(col('region')).show()
+
